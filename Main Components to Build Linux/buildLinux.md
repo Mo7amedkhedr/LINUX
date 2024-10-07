@@ -2,6 +2,7 @@
 
 Toolchain , Bootloader , Kernel , Rootfs
 
+![image2](https://github.com/user-attachments/assets/5efa63ff-6c22-4c98-be0a-d9428489270a)
 
 
 ## Booting Sequence 
@@ -16,3 +17,7 @@ Toolchain , Bootloader , Kernel , Rootfs
 6- LOAD (MBR/GPT) 
 ```
 ### 3- MBR ( Master boot record ) ---> First stage bootloader
+```
+Located in the 1st sector of the bootable disk. Responsible for loading and executing the GRUB boot loader. Contains information about GRUB
+```
+
