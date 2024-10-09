@@ -129,7 +129,144 @@ if it file the blocks will be a pointer to the data if it directory the blocks w
 ![image33](https://github.com/user-attachments/assets/cb6fcddb-974d-47c2-ad24-6c54b7bbeef0)
 
 
+## Linux Command
+
+![image34](https://github.com/user-attachments/assets/46be301f-9b15-4e2d-a9ed-37eaa3f34633)
+
+![image35](https://github.com/user-attachments/assets/7c22658f-7bd4-419d-81bb-ccb27f4cf586)
+
+**General form of Commands**
+
+`$ <command> [options] [arguments]`
+
+**Commands can be issued on their own**
+
+$ ls
+
+$ pwd
+
+$ cd
+
+The Options are normally optional (by definition)
+
+The usually start with ‘-’ or ‘--’
+
+‘-’ used with the short name for the option
+
+`$ ls -a`
+
+‘--‘ used with the long name for the option
+
+`$ ls --all`
+
+**If we want to use multiple options Sometimes we join options or keep them separate**
+
+`
+$ ls -a -R
+$ ls -aR
+$ ls --all --recursive
+`
+
+## Basic Commands
+
+![image36](https://github.com/user-attachments/assets/8cc1f596-f179-45e8-81c8-f8e63791f717)
+
+```$ ls [options] [<dir or file> ..]```
+
+```
+$ ls (list current directory)
+$ ls -a (all: show hidden files)
+$ ls -l (long: show file details)
+$ ls -t (timestamp: sort based on timestamp)
+$ ls -S (Size: sort based on file size)
+$ ls -r (reverse: make the sort in reverse order)
+$ ls -d (directories: Only show directories)
+$ ls -R (Recursive: list files inside subdirectories)
+$ ls <dir> (List the contents of the mentioned directory)
+$ ls <file> (List the mentioned)
+$ ls <dir or file> <dir or file> <dir or file> (list selected dirs or files)
+```
+
+**Displaying the Directory Tree (tree Command)**
+
+```
+$ tree [options] [<dir or file> ..]
+$ tree (display the full tree starting from current dir)
+$ tree -d (only show directories)
+$ tree -a (show all files; including hidden ones)
+$ tree <dir> (show the tree starting from a different point)
+
+```
+
+**Print Working Directory**
+
+```$ pwd (Display Current Directory)```
 
 
+**Moving Around (cd Command)**
 
+$ cd [destination]
+
+```
+$ cd /etc/network (absolute path)
+$ cd ../project/ (relative path)
+$ cd ./project (relative path)
+$ cd project (relative path, same as ./project)
+$ cd ~ (go to my home directory /home/aelarabawy/)
+$ cd ~user_name (go to /home/user_name)
+$ cd (same as cd ~)
+$ cd .. (go to parent directory)
+$ cd - (go to previous directory)
+```
+
+
+**Making New Directories (mkdir Command)**
+
+```$ mkdir <new directory name with path>```
+
+```
+mkdir project1 (create a new directory from current location)
+$ mkdir project1 project2 (create 2 directories)
+$ mkdir /home/khedr/lectures (absolute path)
+$ mkdir ../projects/project1 (relative path)
+$ mkdir -p ../projects/project1 (create intermediate folders if needed)
+```
+
+**Copying Files & Directories (cp Commands)**
+
+```
+$ cp <existing file or dir> <new destination>
+$ cp file1 file2 (copy file1 to a new file file2 same location)
+$ cp file1 ../projects/ (copy file1 to the new location)
+$ cp -r folder1 ../projects/ (copy the folder with its contents)
+$ cp -r folder1 ../projects/folder2 (copy the folder with new name)
+$ cp /etc/passwd . (copy the file …to here )
+```
+
+**Moving/Renaming Files & Directories (mv Command)**
+
+```
+$ mv <existing file or dir> <new destination>
+$ mv file1 file2 (rename file1 to file2)
+$ mv file1 ../projects/ (move file1 to the new location)
+$ mv -r folder1 ../projects/ (move the folder with its contents)
+$ mv -r folder1 ../projects/folder2 (move with new name)
+```
+
+**Removing files and Directories (rm Command)**
+
+```
+$ rm [options] <file or dir list>
+$ rm file1 file2 (remove file1 and file2)
+$ rm -r ../projects/folder1 (remove the folder with its content)
+$ rm -i file1 file2 (interactive, ask me before you remove)
+$ rm -f ../projects/folder1 (force, force remove)
+```
+
+> [!NOTE]  
+> To remove directories you need always to use ‘-r’
+
+
+> [!NOTE] 
+> You can not remove your current directory (or any of its parents)
 
