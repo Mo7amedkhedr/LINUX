@@ -170,5 +170,183 @@ For example:
  ls !(*.txt) lists all files and directories that do not end with ".txt".
 ```
 
+## Regex
+
+**Literal && Meta-Characters**
+
+**Literal**
+
+are those characters that represent themselves in the search pattern .
+
+**Meta-Characters**
+
+are those characters that have special meaning(^ $ . [ ] { } - ? * + ( ) | \ )
+
+Meta characters can be treated as literals if they are escaped, i.e. preceded by a back slash Examples, ^ { $ \ ==>The back slash can also convert some of the literal characters into a meta-characters 
+examples : \d \w
+
+
+**Types of Regular Expressions**
+
+* Basic Regular Expressions ==> . ^ $ [ ] *
+* Extended Regular Expressions ==> ( ) { } ? + | The tool ‘grep’ uses BRE To access ERE, use ‘egrep’ or ‘grep –E ‘
+
+**Basic Regular Expressions**
+
+```
+ Any Character (.)
+At the beginning (^)
+At the end ($)
+Any value from group [ ]
+Any value not from group [^ ]
+range [ - ]
+```
+
+**Extended Regular Expressions**
+
+```
+Alternation (|)
+Quantifier ‘?’ ==> zero or one time
+Quantifier '*' ==> zero or More times
+Quantifier ‘+’ ==> One or More times
+```
+
+## File Permissions (chmod, chown)
+
+chmod allows you to set Read, Write, Execute Permissions, chown enables you to change who the owner of the file is
+
+![image41](https://github.com/user-attachments/assets/02f13d55-f55c-4cd4-868b-fca06020557a)
+
+
+![image42](https://github.com/user-attachments/assets/d9e7e639-8d43-4e17-aad4-dbab367dbdbf)
+
+
+![image43](https://github.com/user-attachments/assets/acfc3295-3a5d-420a-b9e8-4475f192dafd)
+
+
+## File Compression and Archiving
+
+* Tar
+* Bz2
+* 7z
+* Gz
+
+
+**Tar**
+
+The Tar command, short for Tape Archive, is a powerful tool that allows users to create compressed and archived files
+
+```tar [options] [archive-file] [file or directory to be archived]```
+
+Here ,
+tar: The command itself.
+
+[options]: Optional flags or settings that modify the behavior of the tar command.
+
+[archive-file]: The name of the archive file you are creating or working with.
+
+[file or directory to be archived]: The file or directory you want to include in the archive.
+
+
+|    Options    | Description   |
+| ------------- | ------------- |
+| -c  | Creates an archive by bundling files and directories together.  |
+| -x  | Extracts files and directories from an existing archive.  |
+| -f  | Specifies the filename of the archive to be created or extracted.  |
+| -t  |Displays or lists the files and directories contained within an archive.  |
+| -u  | Archives and adds new files or directories to an existing archive.  |
+| -v  |Displays verbose information, providing detailed output during the archiving or extraction process.  |
+| -A  | Concatenates multiple archive files into a single archive. |
+| -z  | Uses gzip compression when creating a tar file, resulting in a compressed archive with the ‘.tar.gz’ extension.  |
+| -j  | Uses bzip2 compression when creating a tar file, resulting in a compressed archive with the ‘.tar.bz2’ extension. |
+| -W  |Verifies the integrity of an archive file, ensuring its contents are not corrupted. |
+|-r | Updates or adds files or directories to an already existing archive without recreating the entire archive.  |
+
+**Examples**
+
+1. Creating an uncompressed tar Archive using option -cvf
+
+```
+tar cvf file.tar *.c
+
+‘-c’: Creates a new archive.
+‘-v’: Displays verbose output, showing the progress of the archiving process.
+‘-f’: Specifies the filename of the archive
+
+OUTPUT:
+os2.c
+os3.c
+os4.c
+```
+
+2. Extracting files from Archive using option -xvf
+
+```
+tar xvf file.tar
+
+‘-x’: Extracts files from an archive.
+‘-v’: Displays verbose output during the extraction process.
+‘-f’: Specifies the filename of the archive.
+
+Output :  
+
+os2.c
+os3.c
+os4.c
+```
+
+3. gzip compression on the tar Archive, using option -z
+
+```
+
+tar cvzf file.tar.gz *.c
+
+‘-z’: Uses gzip compression.
+‘-j’: Uses bzip2 compression.
+‘-J’: Uses xz compression.
+
+```
+
+4. Extracting a gzip tar Archive *.tar.gz using option -xvzf :
+
+This command extracts files from tar archived file.tar.gz files.  
+
+```tar xvzf file.tar.gz```
+
+5. Creating compressed tar archive file in Linux using option -j
+
+This command compresses and creates archive files less than the size of the gzip. Both compress and decompress take more time than gzip.  
+
+```
+tar cvfj file.tar.tbz example.cpp
+Output:  
+
+tar cvfj file.tar.tbz example.cpp
+example.cpp
+
+tar tvf file.tar.tbz
+-rwxrwxrwx root/root        94 2017-09-17 02:47 example.cpp
+```
+
+6. Untar single tar file or specified directory in Linux:
+
+This command will Untar a file in current directory or in a specified directory using -C option.  
+
+```
+tar xvfj file.tar 
+or 
+tar xvfj file.tar -C path of file in directory
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
