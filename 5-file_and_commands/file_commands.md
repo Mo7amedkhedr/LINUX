@@ -339,6 +339,67 @@ tar xvfj file.tar -C path of file in directory
 ```
 
 
+## Text Processing
+
+**grep**
+
+Grep, short for “global regular expression print”, is a command used for searching and matching text patterns in files contained in the regular expressions.
+
+![image44](https://github.com/user-attachments/assets/667c8180-5570-4d92-ac1e-d6f3d381dfd8)
+
+
+**sed**
+
+* SED is a powerful text stream editor. Can do insertion, deletion, search, and replace(substitution).
+* SED command in UNIX supports regular expression which allows it to perform complex pattern matching.
+
+`$sed 's/unix/linux/' file.txt`
+
+Here the “s” specifies the substitution operation. The “/” are delimiters. The “unix” is the search pattern and the “linux” is the replacement string. By default, the sed command replaces the first occurrence of the pattern in each line and it won’t replace the second, third…occurrence in the line.
+
+
+`$sed 's/unix/linux/2' file.txt`
+
+Use the ‘/1’, ‘/2’ etc. flags to replace the first, second occurrence of a pattern in a line
+
+
+`$sed 's/unix/linux/g' file.txt`
+
+The substitute flag /g (global replacement) specifies the sed command to replace all the occurrences of the string in the line.
+
+
+`$sed 's/unix/linux/3g' file.txt`
+
+Use the combination of /1, /2 etc and /g to replace all the patterns from the nth occurrence of a pattern in a line. The following sed command replaces the third, fourth, fifth… “unix” word with “linux” word in a line
+
+
+`$sed '3 s/unix/linux/' file.txt`
+
+The above sed command replaces the string only on the third line.
+
+
+`$sed 's/unix/linux/p' file.txt`
+
+The /p print flag prints the replaced line twice on the terminal. If a line does not have the search pattern and is not replaced, then the /p prints that line only once
+
+`$sed '1,3 s/unix/linux/' file.txt`
+
+Here the sed command replaces the lines with range from 1 to 3
+
+**To Delete a particular line say n in this example**
+
+```
+Syntax:
+$ sed 'nd' filename.txt
+Example:
+$ sed '5d' filename.txt
+```
+
+**To Delete a last line**
+
+```$ sed '$d' filename.txt```
+
+
 
 
 
