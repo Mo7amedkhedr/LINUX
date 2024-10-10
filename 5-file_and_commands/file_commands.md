@@ -105,5 +105,70 @@ y-yank)
 
 ```
 
+## commands
+
+```
+● :3,5d - delete lines starting from 3 to 5
+● :g/{pattern}/d - delete all lines containing pattern
+● :g!/{pattern}/d - delete all lines not containing pattern
+● :%s/searchword/replaceword/g
+● :%s/searchword/replaceword/gc
+● set number ,set relativenumber
+● Set mouse=a
+● /pattern – search forward for the specified pattern
+```
+
+## Controls
+
+```
+Redirection > 2> <
+Piping |
+Wild card *,? ,()
+```
+
+![image39](https://github.com/user-attachments/assets/27827486-668a-46e7-bda2-e3ea14db0b26)
+
+## Piping
+
+![image40](https://github.com/user-attachments/assets/1ece20e1-0b67-4f1d-81de-40f634b285bc)
+
+
+## Wild Card
+
+In Linux, a wildcard is a character or a sequence of characters used to represent one or more other characters. Wildcards are mainly used with commands like ls, cp, mv, and find to perform operations on multiple files or directories that match a certain pattern.
+
+**Example**
+
+```
+Asterisk(*) : The asterisk (*) represents zero or more characters. For example:
+   *.txt matches all files ending with ".txt".
+   file* matches all files starting with "file".
+   *pattern* matches all files or directories containing "pattern" anywhere in their names.
+```
+
+```   
+ Question Mark (?): The question mark (?) represents a single character. For example:
+ file?.txt matches "file1.txt", "fileA.txt", but not "file10.txt".
+```
+
+```
+Square Brackets[] and,ranges:Square brackets allow you to specify a range or a set of characters for asingle position in the pattern
+For example:
+ [0-9]* matches all files or directories starting with a digit.
+ [aeiou] matches any single vowel
+```
+
+```
+ Brace Expansion {} or : Brace expansion allows you to generate multiple strings by specifying a comma-separated list inside curly
+ braces. For example:
+ file{1,2,3}.txt expands to "file1.txt", "file2.txt", "file3.txt".
+ {apple,banana,orange} expands to "apple", "banana", "orange".
+```
+
+```
+ Exclamation Mark (!) not: The exclamation mark (!) can be used to negate a pattern. For example:
+ ls !(*.txt) lists all files and directories that do not end with ".txt".
+```
+
 
 
