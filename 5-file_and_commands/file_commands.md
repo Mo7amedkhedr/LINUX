@@ -402,6 +402,166 @@ $ sed '5d' filename.txt
 
 
 
+## File Handling Internals
+
+![image45](https://github.com/user-attachments/assets/1a1a30d3-9d7c-445b-8fa0-d885345eb6ac)
+
+![image46](https://github.com/user-attachments/assets/08ef5773-1e7d-4582-8ed5-38886270cf3d)
+
+![image47](https://github.com/user-attachments/assets/b2c88763-3118-407b-9622-cf58d549d9e6)
+
+**What is a File ??**
+
+•A file is a set of bytes that represent some content (pdf document, excel sheet, binary executable, … )
+
+•The file is stored in a (partition in a) storage device as a single data block or fragmented into a group of data blocks (within the same partition)
+
+•The fileSystem is responsible for managing the data block(s), and their representation to the user
+
+•For this management, the fileSystem needs to maintain some extra info about the file which is called file Meta-data
+
+   •File Size
+   
+   •File Owner (user & group)
+   
+   •File Permissions
+   
+   •Data of creation/last modification
+   
+   •Pointers to the file content data blocks
+   
+    •etc …
+    
+•These meta-data are stored in an “inode” structure
+
+•Note: the inode does not contain the file name or its location
+
+•This means that the filesystem maintains a table of inode structures (one structure per file)
+
+•The The “inode” structure will contain all file meta-data (except its filename)
+
+•The “inode” structure will also point to the data blocks of the file
+
+•Each data node has a unique number across the filesystem (the inode number)
+
+•Inode numbers are unique per filesystem (and not across the system)
+
+•Directories are a special type of files, accordingly, they are treated the same way
+
+•The inode structure does not have knowledge about the filename or its location
+
+•Instead, each file or directory has another structure named “dentry”, this structure maps a file/directory to its “inode#”
+
+•The “dentry” structure forms the directory tree
+
+
+![image48](https://github.com/user-attachments/assets/bf75bdbb-fbeb-4250-a536-19aebf315f25)
+
+## Listing Files/Directories (ls Command, stat Command, df Comand )
+
+```
+$ ls -i (List with showing the inode#)
+$ ls -il (List with showing the inode# with long format)
+$ stat (Show File Status info)
+$ df (Show FileSystem Disk Space Usage)
+$ df -i (Show FileSystem inode Usage)
+```
+
+## FILE OPERATIONS
+
+**Hard Links**
+
+•The decision of not including the filename and path in the “inode” structure was to enable the use of hard links
+
+•Hard links were introduced from the early days of Unix
+
+•A hard link
+
+•Not a new file
+
+•Same file content
+
+•Same inode
+
+•Just an additional “dentry” with a different filename/path, but with the same inode#
+
+•This is useful if we need to have the same file with two names, or in two locations
+
+•Hard links are not very common these days, they have some limitations,
+
+•Only applicable for files, not used for directories After implementing it for directories, a security hole was found Can cause loops of links which result in system faults So it was disabled in latest releases
+
+•Does not work across filesystems
+
+We link using the inode# But inode# is only unique within the same filesystemHence, we can not link to a file in a different filesystem This is very limiting, specially Linux merges all the FS in a unified tree
+
+![image49](https://github.com/user-attachments/assets/7f03b679-0afe-45ad-8cce-4c1cf881185f)
+
+
+**Symbolic Links**
+
+•A symbolic link is introduced to fix the problems of Hard Links
+
+•A symbolic Link is not just a dentry structure; it is a file with an inode structre
+
+•The inode structure The type is set to ‘l’ for a symbolic link
+
+•Two types of Implementation:
+
+•Slow Symbolic Links:
+
+       •The data block of the new file include the path of the file it is linking to
+       
+•Fast Symbolic Links:
+
+•A field in the inode points to the path and name of the file/directory it is pointing to
+
+•Faster, no need to read the data block
+
+•Not possible if the path is too long to fit in the inode structure
+
+•Since a symbolic link it has its own inode, with an obvious indication that it is a link,
+
+•Some commands is able to treat it differently
+
+•Avoid the security hole in hard links with linking directories
+
+•We can link to a file/directory in a different file system
+
+•Symbolic links are like shortcuts in windows
+
+•You can have a symbolic link to a file or a folder
+
+
+![image50](https://github.com/user-attachments/assets/c4db1e92-eb1a-409c-bd9a-a7df6a226da6)
+
+
+
+
+## Hard Link Vs Symbolic Link Abstracted View
+
+
+![image51](https://github.com/user-attachments/assets/93df247d-c233-4a2f-86f8-ec3bf02d597f)
+
+
+## Creating File Links (ln Command)
+
+•To create a Hard Link
+
+```
+$ ln <File to link to> <link name & location>
+$ ln file.log ~/log-files/a.log
+```
+•To create a Symbolic Link
+
+```
+$ ln –s <File to link to> <link name & location>
+$ ln -s ~/file.log ~/log-files/a.log
+```
+
+**Important Note: Always use absolute paths for the file to link to when creating symbolic links …. Never use relative path format**
+
+
 
 
 
