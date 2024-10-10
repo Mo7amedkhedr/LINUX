@@ -562,7 +562,91 @@ $ ln -s ~/file.log ~/log-files/a.log
 **Important Note: Always use absolute paths for the file to link to when creating symbolic links …. Never use relative path format**
 
 
+## Help Commands
 
+![image52](https://github.com/user-attachments/assets/6a248203-e55c-4460-90dd-f74e96283f0a)
+
+**man Command**
+
+`$ man <command> (Read the man page for a Command)`
+
+•The`man` command reads from the manual pages stored in your distribution
+
+•The location of these pages may differ slightly based on the distribution
+
+•Use the command `manpath` to know the location of the man pages on your machine
+
+$ manpath
+
+•This command identify the location of the man pages based on the configuration file `/etc/manpath.cfg`
+
+•Sometimes we will have an Environment variable MANPATH for that purpose too
+
+$ echo $MANPATH
+
+•Typically they are located in /usr/share/man/
+
+**The “whatis” Database**
+
+The `whatis` database is a database containing a selected parts of the man pages
+
+•Title
+
+•Section Number
+
+•Name field
+
+•This database is used with the commands,
+
+$ whatis
+
+$ apropos
+
+$ whatis <keyword> (find the man pages which has keyword in title)
+
+**apropos Command**
+
+•The `man` command assumes that you know the command name
+
+•What if you don’t know the command name and just have a keyword ??
+
+•The solution is to use `apropos` command
+
+•`apropos` command receives a keyword, and searches both the ‘title’ and the ‘Name’ field in the whatis database for this keyword
+
+•It then prints a single line (the Name field) for each command matching the keyword
+
+$ apropos <keyword>
+
+•Examples:
+
+$ apropos process (Searches for all commands dealing with process)
+
+$ apropos proce (even a part of a word can be used)
+
+•Note, the same output can be achieved via,
+
+$ man -k <keyword>
+
+**info Command**
+
+$ info <Command> (Display the Info pages on the command)
+
+•Info pages are similar to man pages but created by the GNU project for the GNU applications
+
+$ info gzip
+
+$ info emacs
+
+•To know more about this command
+
+$ info info
+
+•The GNU commands will have both man pages and info pages
+
+•The info pages are usually more recent and are somewhat easier to use
+
+•Sometimes, the man pages refer to the Info pages
 
 
 
