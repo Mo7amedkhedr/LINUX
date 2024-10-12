@@ -365,6 +365,215 @@ In all of the above cases, the user will be prompted for a password for the new 
 
 •For this to succeed, the username will need to be configured in the configuration file /etc/sudoers
 
+## Process Management
+
+**What is a Process**
+
+•A Process is an instance of a running program
+
+•Linux is a multi-tasking OS, This means it can run multiple tasks simultaneously
+
+•The Linux Kernel distribute the processor time among the running processes
+
+•Even a single application, may have multiple threads (for doing multiple actions in parallel)
+
+•In Linux, a thread is just another process (of special nature) so a multi-threaded application is an application that have multiple processes running in parallel
+
+•We can also have multiple instances of the same application running simultaneously in different processes
+
+
+**Process Owner**
+
+•Linux is a multi-user System, so multiple users can be using the system
+
+•Each user starting a process becomes its owner
+
+•Note that the process owner does not have to be the same as the owner of the binary file for the process
+
+•Each process have an owner, some processes started by the system can be owned by the root user
+
+•The process owner has privileges on his process. He can kill it, pause it, resume it
+
+•The ‘root’ user have super powers on all system processes
+
+•The process inherits its user privileges when trying to access resources
+
+**Parent & Child Processes**
+
+•Processes are organized in parent-child relationships
+
+•Each process that creates another becomes the parent, and the new process becomes the child process
+
+•First process to run is the `init` process that is started at system boot… this is the grand parent of all processes in the whole system
+
+•If a process dies, then its orphan children are re-parented to `the init process`
+
+**Process IDs**
+
+•Each Process has a unique number to identify it
+
+•It is called Process ID (PID)
+
+•Each process will maintain its PID and the PID of its parent (PPID)
+
+•The PID and PPID enable us to build the process hierarchy tree
+
+•The init process is the parent of all processes, which has
+
+PID = 1
+
+PPID = 0
+
+•To show the Process tree hierarchy
+
+```
+$ pstree (Show tree starting at init process)
+$ pstree -p (to show PIDs of all processes)
+$ pstree 1000 (Show tree starting at process with PID = 1000)
+```
+
+**Process Types**
+
+•Interactive Processes
+
+•Automatic Processes (Batch Processes)
+
+•Daemon Processes
+
+
+**Interactive Process**
+
+•The process is started by a user within a terminal
+
+•It is controlled via that terminal
+
+•It is attached to its terminal, and will be killed if its terminal is closed
+
+•It is called interactive, cause it communicates with the user through the terminal
+
+•Examples:
+
+```
+$ ls
+$ cat *.log | grep “error” | sort
+$ echo “Good Morning” > my-file
+```
+
+**The “Job” Concept**
+
+When a command is issued, the execution of this command is called a `Job`
+
+•The Job can be,
+
+**•A single process**
+
+$ gedit
+
+$ cat my-file
+
+**•Multiple connected processes**
+
+$ ls | sort
+
+**•A script that runs multiple processes (within a sub-shell)**
+
+$ ./my-script
+
+•Jobs can be manipulated in the shell via “Job Control”
+
+
+Jobs can run in the,
+
+**•Foreground**
+
+•All input and Output of the terminal is exclusively for this job
+
+•User can not use the terminal for any other activity or start other jobs
+
+•Only One Job can be a foreground job
+
+•Initially the shell is in the foreground until a job is launched
+
+**•Background**
+
+•Job Input/Output does not utilize the terminal
+
+•However, it is still attached to the terminal
+
+•Possibility of multiple Jobs in the background for the same terminal
+
+•Sometimes it is useful when,
+
+•The process in the job has a Graphical User Interface and does not need the terminal for its Input/Output
+
+•The process takes a long time in processing, and user needs to use the terminal for other purposes
+
+•User needs to launch another job on the same terminal
+
+•Start a job in the foreground
+
+`$ gedit`
+
+•Start a job in the background
+
+`$ gedit &`
+
+•Stop the foreground Job
+
+```
+$ gedit
+Ctrl-z
+```
+
+•Resume the Paused Job in the foreground
+
+```
+$ gedit
+Ctrl-z
+$ fg
+```
+
+•Interrupt a foreground Job
+
+```
+$ gedit
+Ctrl-c
+```
+
+•Switch the foreground Job to the background
+
+```
+$ gedit
+Ctrl-z
+$ bg
+```
+
+`$ jobs`  This will show which job runs in the FG, and which run in BG
+
+Switch a background job into the foreground
+
+```
+$ jobs
+$ fg %n (where n is the process number in the list )
+```
+
+•Kill a background Job (all processes in this Job)
+
+```
+$ jobs
+$ kill %n
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
