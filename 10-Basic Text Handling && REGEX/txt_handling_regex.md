@@ -367,6 +367,237 @@ $ cd /home/bob
 $ patch -p5 < patch-file
 ```
 
+## Regular Expressions
+
+**What is Regular Expressions ??**
+
+We learned how to do simple text operations (like search on single strings…) How about if I want to,
+
+Search for string-1 or string-2 … Search for a string only if it occurs at the beginning of the line...Search for a pattern (such as a phone number, email, URL,…)...Search for a pattern that have some repetition
+
+•This means we need a more powerful mechanism to deal with text patterns….
+
+**•That is the role of Regular Expressions (REGEX)**
+
+• Regular Expressions are a very powerful tool for creating text patterns for use by several Linux tools (specially for search in text)
+
+**One of the main tools using it is grep (the` re` in `grep` stands for regular expressions)**
+
+## grep Command
+
+`$ grep [options] <string/pattern> <files>`
+
+Search for the string or pattern within the set of files
+
+![image89](https://github.com/user-attachments/assets/2350a950-95e4-4eb6-8740-374f2d0cd876)
+
+
+## Literal Vs. Meta-Characters
+
+•Literal characters are those characters that represent themselves in the search pattern
+
+`$ grep “error” *.log`
+
+The letters in “error” are all literal characters
+
+•Meta characters are those characters that have special meaning,
+
+`^ $ . [ ] { } - ? * + ( ) | \ `
+
+All other characters are literal characters
+
+Meta characters can be treated as literals if they are escaped, i.e. preceded by a back slash
+
+•Examples, \^ \{ \$ \\
+
+**Types of Regular Expressions**
+
+•POSIX defines two types of regular expressions,
+
+•Basic Regular Expressions (BRE)
+
+•Extended Regular Expressions (ERE)
+
+•Basic Regular Expressions use the following meta-characters, all other characters are considered literal:
+
+`. ^ $ [ ] *`
+•Extended Regular Expressions use the following set in addition to the basic set,
+
+`( ) { } ? + |`
+
+•Then the backslash is used to reverse those meta-characters into literals (in ERE), and vice versa (in BRE)
+
+•The tool `grep` uses BRE
+
+•To access ERE, use `egrep` or `grep –E `
+
+
+**The dot character ‘ . ’**
+
+•The `. (dot)` is a meta-character that represent any single character (not including NULL character)
+
+•For example,
+
+`$ grep “.zip” file.log`
+
+This searches for a 4 letter text pattern that starts with any character followed by the three letters in ‘zip’
+
+•May result in: gzip, bzip, gnubzip , rezipped
+
+•But will not result in : zip
+
+**(^) and ($)**
+
+•The `(^)`at the beginning of the string means that this string has to be at the beginning of the line
+
+•The `($)` at the end of the string means that this string has to be at the end of the line
+
+Examples:
+
+```
+$ grep “^zip” file.txt --> results in any line that starts with ‘zip’
+$ grep “zip$” file.txt --> results in any line that ends with ‘zip’
+$ grep “^zip$” file.txt --> results in any line that have only ‘zip’
+$ grep “^$” file.txt --> results in empty lines
+```
+
+**( [ ) and ( ] )**
+
+•The use of brackets for any of a set of characters listed between the brackets
+
+`$ grep “[bg]zip” dict.txt` Results in: bzip, gzip, aabzip
+
+•Any character inside the bracket will be considered literal except for
+
+•(^) if it comes at the beginning (will considered as negation) 
+
+•(-) if it comes in the middle (will be considered as range)
+
+•Negation, `$ grep “[^bg]zip” dict.txt`  Will catch words with any character before zip except b or g or Null character
+
+•Ranges `$ grep “[a-z]2” dict.txt` Will catch words starting with any small letter followed by 2
+
+`$ grep “[a-fA-F]4” dict.txt Will catch any word with letter A-F (case insensitive) followed by 4
+
+## EXTENDED REGULAR EXPRESSIONS (ERE)
+
+**Alternation ( | )**
+
+`$ grep -E “AAA|BBB” file.txt`
+
+
+This matches any line containing AAA or BBB
+
+•We separate the alternation from the rest of the regular expression using ‘()’
+
+`$ grep –E “^(AAA|BBB|CCC)” file.txt`  This matches any line starting with AAA or BBB or CCC
+
+
+**Quantifiers (*,+, and ?)**
+
+•The character `?` is used to express that the preceding element to be optional (zero or one time)
+
+•The character `*` is used (zero or More times)
+
+•The character `+` is used (One or More times)
+
+•Example,
+
+We are searching any line starting with a phone number… this can be in the format (nnn) nnn – nnnn OR nnn nnn-nnnn
+
+`$ grep –E “^\(?[0-9][0-9][0-9]\)? [0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]” file.txt`
+
+•Example, Want to check which lines constitute a proper statement, start with a capital letter, followed by any character or spaces, and ending by a period
+
+`$ grep –E “^[[:upper:]][[:upper:][:lower:] ]*\.$” file.txt`
+
+
+•A lot of other commands also work with regular expressions such as,
+
+•The commands `find` and `locate` for finding files
+
+•The `vi` editor
+
+•The command `less` can perform text search using regular expressions
+
+•Tools that use regular expressions extensively
+
+•sed
+
+•awk
+
+## sed
+
+`sed` stands for Stream Editor
+
+`sed` is used to modify text files within a program, script, or from the command line
+
+`sed` is one of the very famous programs to use regular expressions extensively
+
+`$ sed ‘command string’`
+
+•The input file that sed works on can be passed through:
+
+•Input redirection
+
+`$ sed ‘command string’ < input-file`
+
+•Pipes
+
+`$ cat input-file | sed ‘command string’`
+
+•The output goes to stdout, in case you want the output in a file, you need to redirect it
+
+`$ sed ‘command string’ < input-file > output-file`
+
+
+**Substituting Text**
+
+•Substituting text is one of the most popular commands of sed
+
+•It searches for all the occurrences of a certain text pattern (using REGEX) and substitute it with different string
+
+![image90](https://github.com/user-attachments/assets/99ce9d6e-fa4b-423f-9479-d302b4ca8c51)
+
+•By default, sed uses the slash as a separator (delimiter) between the command, search pattern, and the replacement pattern.
+
+•If we need to use a slash inside the search pattern or the replacement pattern, we must escape it (precede it with a back slash)
+
+`$ sed ‘s/yes\/no/true\/false/’ < old-file > new-file`
+
+
+•Another option is to use another character as a separator,
+
+```
+$ sed ‘s:yes/no:true/false:’ < old-file > new-file
+$ sed ‘s|yes/no|true/false|’ < old-file > new-file
+```
+
+•sed works on the file line by line
+
+•So this command
+
+`$ sed ‘s/day/night/’ <old-file >new-file`
+
+•Changes one occurrence of the search pattern (day) in each line into the replacement pattern (night)
+
+•If the search pattern exists multiple times inside the same line, only the first occurrence will be substituted
+
+•To avoid that use the global flag
+
+`$ sed ‘s/day/night/g’ <old-file >new-file`
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
