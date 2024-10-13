@@ -145,11 +145,48 @@ x : Remove the tty restriction
 u : Long Format (more fields)
 ```
 
+**Showing Threads**
+
+•To show threads for multithreaded applications, use one of the following options
+
+```
+$ ps -H
+$ ps -L
+$ ps -T
+$ ps -m
+```
+
+A common practice, is to do a full listing and pipe the output to a search filter to limit the list to what we are interested in
+
+`$ ps -ef | grep root ` This shows all processes owned by the root user
 
 
+`$ ps aux | grep “pts/2”` This shows all processes attached to the tty pts/2
 
+**Display Process Resource Usage (top Command)**
 
+`$ top `  Displays a dynamic view of the resource usage of system processes
 
+**Manipulating Output**
+
+```
+•While the “top” tool is running,
+•Push ‘M’ to sort by memory usage
+•Push ‘P’ to sort by CPU processing usage
+•Push ‘T’ to sort by Time
+•Push ‘k <pid>’ to kill process by its pid
+•Push ‘h’ for getting a help page for all options
+•Push ‘H’ to enable/disable showing threads separately
+•Push ‘q’ to quit the tool
+```
+
+**Display System Resource Usage (vmstat Command)**
+
+`$ vmstat` The ‘vmstat’ Command displays the system resource usage
+
+**Display Memory Usage (free Command)**
+
+`$ free <options>` This command displays amount of free and used memory in the system
 
 
 
