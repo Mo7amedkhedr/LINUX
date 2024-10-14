@@ -154,16 +154,117 @@
 
 `$ du /dev/sda1`
 
+**A Virtual FileSystem**
 
 
+•A virtual filesystem is a filesystem that resides in memory and does not have physical files stored on some storage device
+
+•Instead, it is just a way to send information between the user application and the kernel in the form of reading a file or writing to a file
+
+•Examples of virtual filesystems are
+
+•The procfs filesystem which is mounted in `/proc`
+
+•The sysfs filesystem which is ususally mounted in  `/sys`
+
+•When we write to a virtual filesystem file (as in /proc or /sys), we are sending information to the kernel for processing, and not storing data in a file
+
+•When we are reading from a file in a virtual filesystem, we are actually querying the kernel, and causing some processing with some output, and not just reading from a file
+
+•That is why, when we list files in a virtual filesystem, we normally find the timestamp showing the current time, and the file size maybe zero although we get data when we perform a read (through cat command for example)
+
+•The `procfs and sysfs` filesystems are one way to learn a lot of information about the kernel by user space applications
+
+•Most files in /proc are read only but some are writable (specially in /proc/sys/ )
+
+•There are more files that are writable in /sys
 
 
+•There are a lot of information that you can read from the /proc and /sys
+
+•Information about processes, memory, interrupts, filesystems, hardware devices, network, and much more
+
+•The initial role for /proc was to carry information about the processes, but it ended up with much more information
+
+•The initial role for /sys was to carry information about the system devices and hardware buses but it also ended up with much more info
+
+**Process List**
+
+•The /proc contains a directory for each process running on the system
+
+•Directories for processes are named with the process pid
+
+•For example the init process will be represented by /proc/1
+
+**/proc/cpuinfo**
+
+•This file will carry the information about the processor cores in the machine
+
+•It will show a list of all the processor cores with their attributes
+
+•Core number
+
+•Processor name, family, and model name
+
+•Cache Size
+
+•Does it have a FPU
+
+•Processor Speed in MHz
 
 
+**/proc/interrupts**
+
+•This file will report information on the processor interrupts
+
+•It will have a table for interrupts for all the cores in the system to show the number of interrupts for every interrupt line on each processor, and how many times this interrupt happened
+
+•It will also show which devices are servicing these interrupts
 
 
+**/proc/cmdline**
+
+•This file shows the command line arguments that where passed to the kernel at its startup
+
+•It will state things like
+
+•Location of the root file system
+
+•Where does the kernel send its messages (the different consoles)
+
+•Should the kernel be “quiet” which means, it will not send its output to a console
+
+•Location of the boot image for the kernel
+
+**/proc/kcore**
+
+•This file represents all the physical memory of the system
+
+•Size of this file is same as the physical memory + 4 bytes
 
 
+•Don’t try to list the file content since it is huge and will probably hang your system
+
+•It can be used with debugger to analyze memory issues during development
+
+
+**/sys**
+
+•The sysfs is similar to the procfs from the perspective that it is a virtual filesystem, and reading/writing to its files trigger functionality in the kernel
+
+•However, it comes with some differences,
+
+•It mainly targets the description of attributes of system devices and hardware (both configuration and statistics)
+
+•Its output/input is formatted to be used by a program, and hence it is not very human readable in some cases
+
+•Each file represents one value (whether input or output)
+
+•It does not have files that carry tables of information, or a list of parameters.
+
+•If you need to show 4 counter statistics, then you will have 4 readable files in /sys (each file will contain a single counter value)
+
+•If you need to configure two attributes of a device, you will need 2 writable files in /sys
 
 
 
